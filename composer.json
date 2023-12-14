@@ -1,0 +1,46 @@
+{
+    "name": "bisual/bisualmail",
+    "description": "Editor de mails y gestor de newsletter para backoffice",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bisual",
+            "email": "info@bisual.net",
+            "homepage": "https://bisual.net"
+        }
+    ],
+    "homepage": "https://bisual.net",
+    "keywords": ["Bisual", "Backetfy", "bisualmail"],
+    "require": {
+        "illuminate/support": "^8.0",
+        "reecem/mocker": "1.1.*",
+        "thomasjohnkane/snooze": "^1.0",
+        "spatie/laravel-permission": "^3.16.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~8.0|~9.0",
+        "mockery/mockery": "~1.2",
+        "orchestra/testbench": "~6.0",
+        "sempro/phpunit-pretty-print": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "bisual\\bisualmail\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "bisual\\bisualmail\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "bisual\\bisualmail\\bisualMailServiceProvider"
+            ],
+            "aliases": {
+                "bisualMail": "bisual\\bisualmail\\Facades\\bisualMail"
+            }
+        }
+    }
+}

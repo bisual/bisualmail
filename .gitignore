@@ -1,23 +1,11 @@
-/vendor/
-node_modules/
-npm-debug.log
-yarn-error.log
+/node_modules/*
+.DS_Store
+/vendor
 
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
+# exclude everything
+resources/views/templates/*
+resources/views/draft/*
 
-# Laravel 5 & Lumen specific
-public/storage
-public/hot
-
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
-
-storage/*.key
-.env
-Homestead.yaml
-Homestead.json
-/.vagrant
-.phpunit.result.cache
+# exception to the rule
+!resources/views/draft/.gitkeep
+!resources/views/templates/.gitkeep
