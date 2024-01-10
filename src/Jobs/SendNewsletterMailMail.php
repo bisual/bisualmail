@@ -1,6 +1,6 @@
 <?php
 
-namespace bisual\bisualMail\Jobs;
+namespace bisual\bisualmail\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\User;
-use bisual\bisualMail\Notifications\NewsletterMailNotify;
+use bisual\bisualmail\Notifications\NewsletterMailNotify;
 
 class SendNewsletterMailMail implements ShouldQueue
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace bisual\bisualMail\Mail;
+namespace bisual\bisualmail\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

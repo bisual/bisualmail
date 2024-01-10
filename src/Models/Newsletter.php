@@ -1,6 +1,6 @@
 <?php
 
-namespace bisual\bisualMail\Models;
+namespace bisual\bisualmail\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

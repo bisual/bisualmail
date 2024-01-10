@@ -1,12 +1,12 @@
 <?php
 
-namespace bisual\bisualMail\Commands;
+namespace bisual\bisualmail\Commands;
 
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use bisual\bisualMail\Models\Newsletter;
-use bisual\bisualMail\Jobs\SendNewsletterMailMail;
+use bisual\bisualmail\Models\Newsletter;
+use bisual\bisualmail\Jobs\SendNewsletterMailMail;
 
 class SendNewsletters extends Command
 {

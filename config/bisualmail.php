@@ -10,7 +10,7 @@ return [
     | BisualMail Path
     |--------------------------------------------------------------------------
     |
-    | This is the URL where you can access bisualMail
+    | This is the URL where you can access bisualmail
     |
     */
 

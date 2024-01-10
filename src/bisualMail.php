@@ -1,6 +1,6 @@
 <?php
 
-namespace bisual\bisualMail;
+namespace bisual\bisualmail;
 
 use App\Role;
 use App\Country;
@@ -18,12 +18,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Artisan;
-use bisual\bisualMail\Models\Newsletter;
+use bisual\bisualmail\Models\Newsletter;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 
-class bisualMail
+class bisualmail
 {
-    public static $view_namespace = 'bisualMail';
+    public static $view_namespace = 'bisualmail';
 
     /**
      * Default type examples for being passed to reflected classes.
@@ -84,10 +84,10 @@ class bisualMail
 
     public static function getTemplatesFile()
     {
-        $file = config('bisualMail.mailables_dir').'templates.json';
+        $file = config('bisualmail.mailables_dir').'templates.json';
         if (! file_exists($file)) {
-            if (! file_exists(config('bisualMail.mailables_dir'))) {
-                mkdir(config('bisualMail.mailables_dir'));
+            if (! file_exists(config('bisualmail.mailables_dir'))) {
+                mkdir(config('bisualmail.mailables_dir'));
             }
             file_put_contents($file, '[]');
         }
@@ -277,7 +277,7 @@ class bisualMail
 
     public static function getTemplateSkeletons()
     {
-        return collect(config('bisualMail.skeletons'));
+        return collect(config('bisualmail.skeletons'));
     }
 
     public static function getTemplateSkeleton($type, $name, $skeleton)
@@ -504,11 +504,11 @@ class bisualMail
     {
         $fqcns = [];
 
-        if (! file_exists(config('bisualMail.mailables_dir'))):
+        if (! file_exists(config('bisualmail.mailables_dir'))):
 
             return; else:
 
-            $allFiles = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(config('bisualMail.mailables_dir')));
+            $allFiles = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(config('bisualmail.mailables_dir')));
         $phpFiles = new RegexIterator($allFiles, '/\.php$/');
         $i = 0;
 
@@ -614,7 +614,7 @@ class bisualMail
 
             DB::beginTransaction();
 
-            $eloquentFactory = app(EloquentFactory::class);
+            // $eloquentFactory = app(EloquentFactory::class);
 
             $args = collect($params)->map(function ($param) {
                 if ($param->getType() !== null) {
@@ -645,8 +645,8 @@ class bisualMail
 
                 if (is_array($arg)) {
                     if (isset($arg['is_instance'])) {
-                        if (isset($eloquentFactory[$arg['instance']]) && config('bisualMail.factory')) {
-                            $filteredparams[] = factory($arg['instance'])->states($factoryStates)->make();
+                        if (isset($eloquentFactory[$arg['instance']]) && config('bisualmail.factory')) {
+                            // $filteredparams[] = factory($arg['instance'])->states($factoryStates)->make();
                         } else {
                             $filteredparams[] = app($arg['instance']);
                         }
@@ -817,7 +817,7 @@ class bisualMail
 
             foreach ($_data as $key => $value) {
                 if (! is_object($value)) {
-                    $_data[$key] = '<span class="bisualMail-key" title="Variable">'.$key.'</span>';
+                    $_data[$key] = '<span class="bisualmail-key" title="Variable">'.$key.'</span>';
                 }
             }
         } else {

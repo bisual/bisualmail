@@ -1,11 +1,11 @@
 <?php
 
-namespace bisual\bisualMail\Http\Controllers;
+namespace bisual\bisualmail\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
-use bisual\bisualMail\bisualMail;
+use bisual\bisualmail\bisualmail;
 
 class TemplatesController extends Controller
 {
@@ -22,10 +22,10 @@ class TemplatesController extends Controller
         $active_item = 'mails';
         $nocard = 1;
 
-        $skeletons = bisualMail::getTemplateSkeletons();
-        $templates = bisualMail::getTemplates();
+        $skeletons = bisualmail::getTemplateSkeletons();
+        $templates = bisualmail::getTemplates();
 
-        return View(bisualMail::$view_namespace.'::sections.templates', compact('skeletons', 'templates', 'active_item', 'nocard'));
+        return View(bisualmail::$view_namespace.'::sections.templates', compact('skeletons', 'templates', 'active_item', 'nocard'));
     }
 
     public function new($type, $name, $skeleton)
@@ -34,49 +34,49 @@ class TemplatesController extends Controller
         $nocard = 1;
         $type = $type === 'html' ? $type : 'markdown';
 
-        $skeleton = bisualMail::getTemplateSkeleton($type, $name, $skeleton);
+        $skeleton = bisualmail::getTemplateSkeleton($type, $name, $skeleton);
 
-        return View(bisualMail::$view_namespace.'::sections.create-template', compact('skeleton', 'active_item', 'nocard'));
+        return View(bisualmail::$view_namespace.'::sections.create-template', compact('skeleton', 'active_item', 'nocard'));
     }
 
     public function view($templateslug = null)
     {
         $active_item = 'mails';
         $nocard = 1;
-        $template = bisualMail::getTemplate($templateslug);
+        $template = bisualmail::getTemplate($templateslug);
 
         if (is_null($template)) {
             return redirect()->route('backetfy.mails.templateList');
         }
 
-        return View(bisualMail::$view_namespace.'::sections.edit-template', compact('template', 'active_item', 'nocard'));
+        return View(bisualmail::$view_namespace.'::sections.edit-template', compact('template', 'active_item', 'nocard'));
     }
 
     public function create(Request $request)
     {
-        return bisualMail::createTemplate($request);
+        return bisualmail::createTemplate($request);
     }
 
     public function select(Request $request)
     {
         $active_item = 'mails';
         $nocard = 1;
-        $skeletons = bisualMail::getTemplateSkeletons();
+        $skeletons = bisualmail::getTemplateSkeletons();
 
-        return View(bisualMail::$view_namespace.'::sections.new-template', compact('skeletons', 'active_item', 'nocard'));
+        return View(bisualmail::$view_namespace.'::sections.new-template', compact('skeletons', 'active_item', 'nocard'));
     }
 
     public function previewTemplateMarkdownView(Request $request)
     {
-        return bisualMail::previewMarkdownViewContent(false, $request->markdown, $request->name, true);
+        return bisualmail::previewMarkdownViewContent(false, $request->markdown, $request->name, true);
     }
 
     public function delete(Request $request)
     {
-        $usingTemplate = bisualMail::getMailables()->filter(function ($mail) use ($request) {
+        $usingTemplate = bisualmail::getMailables()->filter(function ($mail) use ($request) {
             return false !== stristr($mail['view_path'], $request->templateslug);
         });
-        if (bisualMail::deleteTemplate($request->templateslug)) {
+        if (bisualmail::deleteTemplate($request->templateslug)) {
             foreach ($usingTemplate as $key => $mail) {
                 $mail_file = $mail['path_name'];
                 $view_path = $mail['view_path'];
@@ -102,6 +102,6 @@ class TemplatesController extends Controller
 
     public function update(Request $request)
     {
-        return bisualMail::updateTemplate($request);
+        return bisualmail::updateTemplate($request);
     }
 }

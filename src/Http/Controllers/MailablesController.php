@@ -1,11 +1,11 @@
 <?php
 
-namespace bisual\bisualMail\Http\Controllers;
+namespace bisual\bisualmail\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
-use bisual\bisualMail\bisualMail;
+use bisual\bisualmail\bisualmail;
 
 class MailablesController extends Controller
 {
@@ -27,29 +27,29 @@ class MailablesController extends Controller
         $active_item = 'mails';
         $nocard = 1;
 
-        $mailables = bisualMail::getMailables();
+        $mailables = bisualmail::getMailables();
         $mailables = (null !== $mailables) ? $mailables->sortBy('name') : collect([]);
 
-        return view(bisualMail::$view_namespace.'::sections.mailables', compact('mailables', 'active_item', 'nocard'));
+        return view(bisualmail::$view_namespace.'::sections.mailables', compact('mailables', 'active_item', 'nocard'));
     }
 
     public function createMailable(Request $request)
     {
         $active_item = 'mails';
         $nocard = 1;
-        return view(bisualMail::$view_namespace.'::createmailable', compact(['active_item', 'nocard']));
+        return view(bisualmail::$view_namespace.'::createmailable', compact(['active_item', 'nocard']));
     }
 
     public function generateMailable(Request $request)
     {
-        return bisualMail::generateMailable($request);
+        return bisualmail::generateMailable($request);
     }
 
     public function viewMailable($name)
     {
         $active_item = 'mails';
         $nocard = 1;
-        $mailable = bisualMail::getMailable('name', $name);
+        $mailable = bisualmail::getMailable('name', $name);
 
         if ($mailable->isEmpty()) {
             return redirect()->route('backetfy.mails.mailableList');
@@ -58,33 +58,33 @@ class MailablesController extends Controller
         $mailable = $mailable->first();
 
 
-        $templates = bisualMail::getTemplates();
+        $templates = bisualmail::getTemplates();
         $namespace = $mailable['namespace'];
         $view_path = ($mailable['view_path']) ? $mailable['view_path'] : 'templates/view.name.blade.php';
         $currentTemplate = substr(explode('/',$view_path)[count(explode('/',$view_path)) - 1], 0, -10);
         $currentMail = $mailable['path_name'];
 
-        return view(bisualMail::$view_namespace.'::sections.view-mailable')->with(compact('mailable', 'templates', 'currentTemplate', 'currentMail', 'active_item', 'nocard'));
+        return view(bisualmail::$view_namespace.'::sections.view-mailable')->with(compact('mailable', 'templates', 'currentTemplate', 'currentMail', 'active_item', 'nocard'));
     }
 
     public function editMailable($name)
     { 
         $active_item = 'mails';
         $nocard = 1;
-        $templateData = bisualMail::getMailableTemplateData($name);
+        $templateData = bisualmail::getMailableTemplateData($name);
 
         if (! $templateData) {
             return redirect()->route('backetfy.mails.viewMailable', ['name' => $name]);
         }
 
-        return view(bisualMail::$view_namespace.'::sections.edit-mailable-template', compact('templateData', 'name', 'active_item', 'nocard'));
+        return view(bisualmail::$view_namespace.'::sections.edit-mailable-template', compact('templateData', 'name', 'active_item', 'nocard'));
     }
 
     public function templatePreviewError()
     {
         $active_item = 'mails';
         $nocard = 1;
-        return view(bisualMail::$view_namespace.'::previewerror', compact(['active_item', 'nocard']));
+        return view(bisualmail::$view_namespace.'::previewerror', compact(['active_item', 'nocard']));
     }
 
     public function parseTemplate(Request $request)
@@ -114,7 +114,7 @@ class MailablesController extends Controller
         // ref https://regexr.com/4dflu
         $bladeRenderable = preg_replace('/((?!{{.*?-)(&gt;)(?=.*?}}))/', '>', $request->markdown);
 
-        if (bisualMail::markdownedTemplateToView(true, $bladeRenderable, $viewPath, $template)) {
+        if (bisualmail::markdownedTemplateToView(true, $bladeRenderable, $viewPath, $template)) {
             return response()->json([
                 'status' => 'ok',
             ]);
@@ -127,12 +127,12 @@ class MailablesController extends Controller
 
     public function previewMarkdownView(Request $request)
     {
-        return bisualMail::previewMarkdownViewContent(false, $request->markdown, $request->name, false, $request->namespace);
+        return bisualmail::previewMarkdownViewContent(false, $request->markdown, $request->name, false, $request->namespace);
     }
 
     public function previewMailable($name)
     {
-        $mailable = bisualMail::getMailable('name', $name);
+        $mailable = bisualmail::getMailable('name', $name);
 
         if ($mailable->isEmpty()) {
             return redirect()->route('backetfy.mails.mailableList');
@@ -140,10 +140,10 @@ class MailablesController extends Controller
 
         $resource = $mailable->first();
 
-        if (! is_null(bisualMail::handleMailableViewDataArgs($resource['namespace']))) {
+        if (! is_null(bisualmail::handleMailableViewDataArgs($resource['namespace']))) {
             // $instance = new $resource['namespace'];
             //
-            $instance = bisualMail::handleMailableViewDataArgs($resource['namespace']);
+            $instance = bisualmail::handleMailableViewDataArgs($resource['namespace']);
         } else {
             $instance = new $resource['namespace'];
         }
@@ -160,11 +160,11 @@ class MailablesController extends Controller
 
                 return $html->render();
             } catch (\ErrorException $e) {
-                return view(bisualMail::$view_namespace.'::previewerror', ['errorMessage' => $e->getMessage()]);
+                return view(bisualmail::$view_namespace.'::previewerror', ['errorMessage' => $e->getMessage()]);
             }
         }
 
-        return view(bisualMail::$view_namespace.'::previewerror', ['errorMessage' => 'La acción no tiene plantilla asociada.']);
+        return view(bisualmail::$view_namespace.'::previewerror', ['errorMessage' => 'La acción no tiene plantilla asociada.']);
     }
 
     public function delete(Request $request)

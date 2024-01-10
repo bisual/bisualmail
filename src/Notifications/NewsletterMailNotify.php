@@ -1,12 +1,12 @@
 <?php
 
-namespace bisual\bisualMail\Notifications;
+namespace bisual\bisualmail\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use bisual\bisualMail\Mail\NewsletterMail;
+use bisual\bisualmail\Mail\NewsletterMail;
 
 class NewsletterMailNotify extends Notification
 {

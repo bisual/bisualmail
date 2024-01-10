@@ -5,7 +5,7 @@
 ```bash
 composer require bisual/bisualmail
 
-php artisan vendor:publish --provider="bisual\bisualMail\bisualMailServiceProvider"
+php artisan vendor:publish --provider="bisual\bisualmail\bisualmailServiceProvider"
 
 php artisan migrate 
 ```

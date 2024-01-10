@@ -37,10 +37,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "bisual\\bisualmail\\bisualMailServiceProvider"
+                "bisual\\bisualmail\\bisualmailServiceProvider"
             ],
             "aliases": {
-                "bisualMail": "bisual\\bisualmail\\Facades\\bisualMail"
+                "bisualmail": "bisual\\bisualmail\\Facades\\bisualmail"
             }
         }
     }

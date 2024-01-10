@@ -1,11 +1,11 @@
 <?php
 
-namespace bisual\bisualMail;
+namespace bisual\bisualmail;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class bisualMailServiceProvider extends ServiceProvider
+class bisualmailServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.
@@ -46,7 +46,7 @@ class bisualMailServiceProvider extends ServiceProvider
     private function routeConfiguration()
     {
         return [
-            'namespace' => 'bisual\bisualMail\Http\Controllers',
+            'namespace' => 'bisual\bisualmail\Http\Controllers',
             'prefix' => config('bisualmail.path'),
             'middleware' => 'bisualmail',
         ];
@@ -63,7 +63,7 @@ class bisualMailServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('bisualmail', function ($app) {
-            return new bisualMail;
+            return new bisualmail;
         });
     }
 

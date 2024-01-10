@@ -1,13 +1,13 @@
 <?php
 
-namespace bisual\bisualMail\Http\Controllers;
+namespace bisual\bisualmail\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
-use bisual\bisualMail\bisualMail;
-use bisual\bisualMail\Models\Newsletter;
+use bisual\bisualmail\bisualmail;
+use bisual\bisualmail\Models\Newsletter;
 
 class NewslettersController extends Controller
 {
@@ -24,9 +24,9 @@ class NewslettersController extends Controller
         $active_item = 'mails';
         $nocard = 1;
 
-        $newsletters = bisualMail::getNewsletters();
+        $newsletters = bisualmail::getNewsletters();
 
-        return View(bisualMail::$view_namespace.'::sections.newsletters', compact('newsletters', 'active_item', 'nocard'));
+        return View(bisualmail::$view_namespace.'::sections.newsletters', compact('newsletters', 'active_item', 'nocard'));
     }
 
     public function new($type, $name, $skeleton)
@@ -35,9 +35,9 @@ class NewslettersController extends Controller
         $nocard = 1;
         $type = $type === 'html' ? $type : 'markdown';
 
-        $skeleton = bisualMail::getTemplateSkeleton($type, $name, $skeleton);
+        $skeleton = bisualmail::getTemplateSkeleton($type, $name, $skeleton);
 
-        return View(bisualMail::$view_namespace.'::sections.create-template', compact('skeleton', 'active_item', 'nocard'));
+        return View(bisualmail::$view_namespace.'::sections.create-template', compact('skeleton', 'active_item', 'nocard'));
     }
 
     public function view($newsletter_id = null)
@@ -45,10 +45,10 @@ class NewslettersController extends Controller
         $active_item = 'mails';
         $nocard = 1;
 
-        $templates = bisualMail::getTemplateSkeletons()['html'];
+        $templates = bisualmail::getTemplateSkeletons()['html'];
 
-        $newsletter = bisualMail::getNewsletter($newsletter_id);
-        return View(bisualMail::$view_namespace.'::sections.edit-newsletter', compact('newsletter', 'active_item', 'nocard', 'templates'));
+        $newsletter = bisualmail::getNewsletter($newsletter_id);
+        return View(bisualmail::$view_namespace.'::sections.edit-newsletter', compact('newsletter', 'active_item', 'nocard', 'templates'));
     }
 
     public function create(Request $request)
@@ -69,12 +69,12 @@ class NewslettersController extends Controller
         $active_item = 'mails';
         $nocard = 1;
 
-        return View(bisualMail::$view_namespace.'::sections.new-newsletter', compact('active_item', 'nocard'));
+        return View(bisualmail::$view_namespace.'::sections.new-newsletter', compact('active_item', 'nocard'));
     }
 
     public function previewTemplateMarkdownView(Request $request)
     {
-        return bisualMail::previewMarkdownViewContent(false, $request->markdown, $request->name, true);
+        return bisualmail::previewMarkdownViewContent(false, $request->markdown, $request->name, true);
     }
 
     public function delete(Request $request)
@@ -95,7 +95,7 @@ class NewslettersController extends Controller
 
     public function update(Request $request)
     {
-        return bisualMail::updateNewsletter($request);
+        return bisualmail::updateNewsletter($request);
     }
 
     public function parseNewsletter(Request $request)
@@ -103,7 +103,7 @@ class NewslettersController extends Controller
         $newsletter = Newsletter::where('id', $request->newsletter)->first();
         if ($request->newTemplate) {
             $template = explode('/', $request->selectedTemplate);
-            $template = bisualMail::getTemplateSkeleton('html', $template[0], $template[1]);
+            $template = bisualmail::getTemplateSkeleton('html', $template[0], $template[1]);
     
             $bladeRenderable = preg_replace('/((?!{{.*?-)(&gt;)(?=.*?}}))/', '>', $template['template']);
             $newsletter->content = $bladeRenderable;
