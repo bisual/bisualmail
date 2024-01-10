@@ -12,7 +12,7 @@
     "homepage": "https://bisual.net",
     "keywords": ["Bisual", "Backetfy", "bisualmail"],
     "require": {
-        "illuminate/support": "^9.0",
+        "illuminate/support": "^9.0|^10.0",
         "reecem/mocker": "^1.1",
         "thomasjohnkane/snooze": "^2.3.1",
         "spatie/laravel-permission": "^6.0",
