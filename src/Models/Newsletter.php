@@ -11,9 +11,11 @@ class Newsletter extends Model
 
     protected $fillable = ['id', 'title', 'send_date', 'content', 'filter'];
 
-    protected $dates = ['created_at', 'updated_at', 'deleted_at', 'send_date'];
-
     protected $casts = [
         'filters' => 'json',
+        'created_at' => 'datetime:d/m/Y H:i:s',
+        'updated_at' => 'datetime:d/m/Y H:i:s',
+        'send_date' => 'datetime:d/m/Y H:i:s',
+        'deleted_at' => 'datetime:d/m/Y H:i:s',
     ];
 }
